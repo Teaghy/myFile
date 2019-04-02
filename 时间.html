@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .center{
+            height: 200px;
+            width: 500px;
+            margin: 200px auto;
+        }
+        div{
+            text-align: center;
+        }
+        .box{
+            font-size: 24px;
+            color: purple;
+            font-weight: 600;
+        }
+        .box2{
+            font-size: 12px;
+            color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <div class="center">
+        <div class="box">在公司找不到小高和小秦已有</div> 
+            <h1 id="time"></h1>
+            <div class="box2">就当你们是请假吧!</div>
+        </div>  
+    <script>
+        
+        setInterval(function(){
+            formatDuring()
+        },1000)
+        formatDuring()
+        function formatDuring(){
+            var mss=new Date()-new Date('2019/03/27 18:00:00')
+            var days = parseInt(mss / (1000 * 60 * 60 * 24));
+            var hours = parseInt((mss % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = parseInt((mss % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.ceil((mss % (1000 * 60)) / 1000);
+            var time=days + " 天 " + hours + " 小时 " + minutes + " 分钟 " +seconds +"秒";
+            document.querySelector("#time").innerHTML=time
+            // return days + " 天 " + hours + " 小时 " + minutes + " 分钟 " +seconds +"秒";
+        }
+        
+    </script>
+</body>
+</html>

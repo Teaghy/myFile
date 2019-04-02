@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<HTML>
+<HEAD>
+	<TITLE> ZTREE DEMO - checkbox</TITLE>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<!-- <link rel="stylesheet" href="../../../css/demo.css" type="text/css"> -->
+	<link rel="stylesheet" href="../../../css/zTreeStyle/zTreeStyle.css" type="text/css">
+	<script type="text/javascript" src="../../../js/jquery-1.4.4.min.js"></script>
+	<script type="text/javascript" src="../../../js/jquery.ztree.core.js"></script>
+	<script type="text/javascript" src="../../../js/jquery.ztree.excheck.js"></script>
+	<SCRIPT type="text/javascript">
+	var arr=[];
+		var setting = {
+			check: {
+				enable: true
+			},
+			data: {
+				simpleData: {
+					enable: true
+				}
+			},
+			callback: {
+				onCheck: selectzTreeNode
+			}		
+		};
+
+		var zNodes =[
+			{id: 0,name: "重庆",isParent:true},
+			{ id:1, name:"北京"},
+			{ id:11, pId:1, name:"网站"},
+			{ id:111, pId:11, name:"百度www.baidu.com"},
+			{ id:112, pId:11, name:"新浪www.sina.com.cn"},
+			{ id:12, pId:1, name:"论坛"},
+			{ id:121, pId:12, name:"哔哩哔哩www.bilibili.com"},
+			{ id:122, pId:12, name:"哔哩哔哩www.bilibili.com"},
+			{ id:2, name:"湖北",isParent:true},
+			{ id:21, pId:2, name:"网站",isParent:true},
+			{ id:22, pId:2, name:"论坛",isParent:true},
+			{ id:221, pId:22, name:"哔哩哔哩www.bilibili.com"},
+			{ id:222, pId:22, name:"哔哩哔哩www.bilibili.com"},
+			{ id:23, pId:2, name:"微博",isParent:true},
+			{ id:101, pId:0, name:"百度www.baidu.com"},
+			{ id:102, pId:0, name:"新浪www.sina.com.cn"},
+		];
+		var zNodes1 =[
+   
+
+    
+
+		];
+		$(document).ready(function(){
+			$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+			$.fn.zTree.init($("#treeDemo1"), setting , zNodes1 );	
+			var zTree1 =  $.fn.zTree.getZTreeObj("treeDemo1");
+			
+			$('#saveAllWeb').click(function(){
+				arr=[]
+				console.log(123)
+				nodeList = zTree1.getNodes();;
+				getChildren(nodeList)
+				console.log(arr)
+			})	
+		});
+		function selectzTreeNode(obj) {
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+			var node = zTree.getNodeByParam("id",obj);
+			if(node!=null) {
+				zTree.selectNode(node, true);//指定选中ID的节点
+			}
+			//console.log(node)
+		}
+		function addTree(){
+			var zTree =  $.fn.zTree.getZTreeObj("treeDemo");
+
+			nodeList = zTree.getCheckedNodes(true);  //获取选择的数加入到选择树中
+			console.log(nodeList)
+			var Num = 2 + nodeList.length;
+			if (Num>303){
+
+				alert("已超过300个来源的添加，请减少选择的来源!");
+				return;
+			}
+			//$.fn.zTree.init($("#treeDemo1"), setting, nodeList);
+			addSelectedTree(nodeList);
+		}
+		function addSelectedTree(nodeList){    
+			var zTree1 =  $.fn.zTree.getZTreeObj("treeDemo1");
+			console.log(zTree1)
+			var l= nodeList.length;	
+			for( var i=0 ; i<l; i++) {
+				var newNode = nodeList[i];			
+				var id = newNode.id;		
+				id = parseInt(id);
+				var node = zTree1.getNodeByParam("id", id);
+				if (node === null  ) {
+					var paId = newNode.pId;					
+					var pnode = zTree1.getNodeByParam("id", paId);
+					zTree1.addNodes(pnode,{id:newNode.id,pId:newNode.pId,isParent:newNode.isParent,name:newNode.name,hashcode:newNode.hashcode,nocheck:true},false);		
+				}
+					
+			}	
+		}
+		// function saveAllWeb(){
+			
+			function getChildren(nodeArr){
+				
+				//console.log(nodeArr)
+				nodeArr.forEach(currentItem => {
+					console.log(currentItem)
+					if(currentItem.isParent && currentItem.children){
+						getChildren(currentItem.children)
+					}else{
+						// console.log(currentItem.id)
+						arr.push(currentItem.id)
+					}
+				});	
+			}
+			
+		// }
+		function delTreeNode(){
+
+			var zTree1 =  $.fn.zTree.getZTreeObj("treeDemo1");
+			nodeList = zTree1.getSelectedNodes(true);
+			console.log(nodeList)
+			var l= nodeList.length;
+			for( var i=0 ; i<l; i++) {	
+				console.log(i)			
+				if (nodeList[i].id==0){
+					zTree1.removeNode(nodeList[i]);
+					break;
+				}
+				else{
+					var pnode = nodeList[i].getParentNode();
+					console.log(pnode)
+					zTree1.removeNode(nodeList[i]);
+				}
+				// console.log(pnode.children.length)
+				if (pnode.children && pnode.children.length == 0){
+					var node = pnode;
+					if (node.id==0){
+						zTree1.removeNode(node);
+						break;
+					}
+					else{
+						pnode = node.getParentNode();
+						zTree1.removeNode(node);
+					}
+
+					
+				}
+
+			}
+// isSumbit = false;
+//  sycnKeyword(); 
+ 
+}
+
+	</SCRIPT>
+</HEAD>
+
+<BODY>
+<h1>Checkbox 勾选操作</h1>
+<h6>[ 文件路径: excheck/checkbox.html ]</h6>
+<div class="content_wrap">
+	<div class="zTreeDemoBackground left">
+		<ul id="treeDemo" class="ztree"></ul>
+	</div>
+
+
+	<ul id="treeDemo1" class="ztree"></ul>
+	<!-- <div class="right">
+		<ul class="info">
+			<li class="title"><h2>1、setting 配置信息说明</h2>
+				<ul class="list">
+				<li class="highlight_red">使用 checkbox，必须设置 setting.check 中的各个属性，详细请参见 API 文档中的相关内容</li>
+				<li><p>父子关联关系：<br/>
+						被勾选时：<input type="checkbox" id="py" class="checkbox first" checked /><span>关联父</span>
+						<input type="checkbox" id="sy" class="checkbox first" checked /><span>关联子</span><br/>
+						取消勾选时：<input type="checkbox" id="pn" class="checkbox first" checked /><span>关联父</span>
+						<input type="checkbox" id="sn" class="checkbox first" checked /><span>关联子</span><br/>
+						<ul id="code" class="log" style="height:20px;"></ul></p>
+				</li>
+				</ul>
+			</li>
+			<li class="title"><h2>2、treeNode 节点数据说明</h2>
+				<ul class="list">
+				<li class="highlight_red">1)、如果需要初始化默认节点被勾选，请设置 treeNode.checked 属性，详细请参见 API 文档中的相关内容</li>
+				<li class="highlight_red">2)、如果某节点禁用 checkbox，请设置 treeNode.chkDisabled 属性，详细请参见 API 文档中的相关内容 和 'chkDisabled 演示'</li>
+				<li class="highlight_red">3)、如果某节点不显示 checkbox，请设置 treeNode.nocheck 属性，详细请参见 API 文档中的相关内容 和 'nocheck 演示'</li>
+				<li class="highlight_red">4)、如果更换 checked 属性，请参考 API 文档中 setting.data.key.checked 的详细说明</li>
+				<li>5)、其他请参考 API 文档中 treeNode.checkedOld / getCheckStatus / check_Child_State / check_Focus 的详细说明</li>
+				</ul>
+			</li>
+		</ul>
+	</div> -->
+	<a href="javascript: addTree()">增加</a>
+	<a href="javascript:delTreeNode()">删除</a>
+	<!-- <a href="javascript:;" id="saveAllWeb">保存</a> -->
+	<button id="saveAllWeb">保存</button>
+</div>
+</BODY>
+</HTML>
