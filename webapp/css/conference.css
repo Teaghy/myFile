@@ -1,0 +1,121 @@
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+.container {
+    background-color: #27293f;
+    /* padding-bottom: 30px; */
+    width: 100% !important;
+    height: 100%;
+    position: absolute;
+}
+.demoBody {
+    margin:0 25%;
+    height: 100%;
+}
+
+.demoBody .rBody .rTitle {
+    height: 50px;
+    background-color: #332f55;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.rTitle p::before {
+    content: "";
+    display: inline-block;
+    margin-right: 5px;
+    width: 3px;
+    height: 18px;
+    background-color: #4873EB;
+    vertical-align: middle;
+}
+.rTitle p {
+    font-size: 18px;
+    vertical-align: middle;
+    height: 50px;
+    line-height: 50px;
+    margin: 0 0 0 25px;
+    color: #fff;
+    font-weight: bold;
+}
+.rBody{
+    height: 100%;
+}
+.title{
+    height: 30px;
+    line-height: 30px;
+    color: #fff;  
+}
+.title::before {
+    content: "";
+    display: inline-block;
+    width: 3px;
+    height: 18px;
+    background-color: #fd8994;
+    vertical-align: middle;
+}
+.title h4{
+    display: inline-block;
+    font-size: 18px;
+    padding-left: 10px;
+    font-weight: 600;
+}
+.resize{
+    color: #fff;
+    height: 30px;
+    line-height: 30px;
+    font-size: 0;
+    margin-right: 25px;
+}
+.resize i{
+    font-style: normal;
+    margin-right: 15px;
+    font-size: 16px;
+}
+.resize span{
+    display: inline-block;
+    height: 30px;
+    width: 50px;
+    text-align: center;
+    cursor: pointer;
+    border: 1px solid #fd8994;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+.resize span:nth-child(2){
+    border-radius: 3px 0 0 3px;
+}
+.resize span:nth-child(4){
+    border-radius: 0 3px 3px 0;
+}
+.resize span:nth-child(3){
+    border-left: 0;
+    border-right: 0;
+}
+.lMessage {
+    height: calc(100% - 50px);
+    padding: 20px;
+    background-color: #2c2b4a;
+    box-sizing: border-box;
+    overflow: auto;
+}
+.lMessage p{
+    color: #8c87bd;
+    font-size: 15px;
+}
+.resize-font.active{
+    background-color: #fd8994;
+}
+.lMessage .record {
+    font-size: 14px;
+    resize: none;
+    padding: 10px;            
+    width: 100%;
+    height: 100%;
+    letter-spacing: 2px;
+    border: 1px solid #E4E6EB;
+    border-radius: 10px;
+}

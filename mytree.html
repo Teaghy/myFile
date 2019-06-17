@@ -1,0 +1,965 @@
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+
+
+
+  
+
+
+
+
+  
+	
+     
+   
+<link href="https://cdn-files.yqt365.com/css/cssvr2/bootstrap.min.css" rel="stylesheet" type="text/css" />
+ <link href="https://cdn-files.yqt365.com/css/cssvr2/style-metro.css" rel="stylesheet" type="text/css" />
+ <link href="https://cdn-files.yqt365.com/css/cssvr2/default.css" rel="stylesheet" type="text/css" id="style_color" />
+<link rel="stylesheet" href="https://cdn-files.yqt365.com/css/zTreeStyle/zTreeStyle.css" type="text/css">
+
+<!-- BEGIN PAGE LEVEL STYLES -->
+<link rel="stylesheet" type="text/css" href="https://cdn-files.yqt365.com/css/cssvr2/home.css" />
+<link rel="stylesheet" type="text/css" href="https://cdn-files.yqt365.com/css/cssvr2/tips.css" /> 
+
+   <script type='text/javascript' src='https://cdn-files.yqt365.com/js/jquery-1.8.0.min.js'></script>
+
+   <script type="text/javascript" src="https://cdn-files.yqt365.com/js/jquery.ztree.core-3.5.js"></script>
+   <script type="text/javascript" src="https://cdn-files.yqt365.com/js/jquery.ztree.excheck-3.5.js"></script>
+
+
+<style>
+   
+   ul.choose-center-ul li.choose-center-li
+   {
+       list-style: none;
+   }
+   .modal-wrapper p.choose-desc {
+       font-size: 16px;
+   }
+   
+   .choose-footer-style-custom {
+       margin-top: 6px;
+       text-align: center;
+       clear: both;
+   }
+   
+   .choose-footer-style-custom button.btn {
+       margin-right: 60px;
+   }
+   
+   form div.choose-center {
+       /*width:863px;*/
+       overflow: hidden;
+       padding: 6px;
+   }
+   
+   form div.choose-center div.choose-top {
+       line-height: 34px;
+   }
+   
+   form div.choose-center ul.choose-center-ul li.choose-center-li:first-child,
+   form div.choose-center ul.choose-center-ul li.choose-center-li:last-child {
+       float: left;
+       width: 38%;
+       /*border: 1px solid #eee;*/
+   }
+   
+   form div.choose-center ul.choose-center-ul li.choose-center-li:nth-child(2) {
+       float: left;
+       width: 8%;
+       /*border: 1px solid #eee;*/
+       margin: 0 7%;
+       position: relative;
+       padding: 130px 0;
+   }
+   
+   form div.choose-center .choose-center-left {
+       width: 100%;
+   }
+   
+   form div.choose-center .choose-center-operator {
+       width: 100%;
+       position: relative;
+   }
+   
+   form div.choose-center .choose-center-operator a.btn {
+       padding: 5px 7px;
+       display: block;
+       margin-bottom: 5px;
+   }
+   
+   form div.choose-center .choose-center-right {
+       width: 100%;
+   }
+   
+   form div.choose-center ul.choose-center-ul li.choose-center-li input {
+       -webkit-appearance: none;
+       outline: none;
+       height: 26px;
+       display: inline-block;
+       border: 1px solid #eee;
+   }
+   
+   form div.choose-center ul.choose-center-ul li.choose-center-li .choose-center-right input {
+       width: 94.5%;
+   }
+   
+   form div.choose-center ul.choose-center-ul li.choose-center-li .choose-center-left input {
+       width: 73%;
+   }
+   
+   form div.choose-center .choose-center-left a.btn {
+       width: 10%;
+       position: relative;
+       top: -4px;
+       margin-left: 6px;
+       line-height: 18px;
+       padding: 8px 12px;
+       text-align: center;
+       vertical-align: middle;
+   }
+   .choose-footer-style-custom-monitor a.btn{
+       position: relative;
+       left: 52%;
+       top: -37px;
+   }
+   .choose-footer-style-custom a.btn
+   {
+   margin-right: 6px;
+   }
+   form div.choose-center ul.choose-center-ul li.choose-center-li .choose-center-right .choose-bottom,
+   form div.choose-center ul.choose-center-ul li.choose-center-li .choose-center-left .choose-bottom {
+       width: 97%;
+       height: 260px;
+       padding: 5px 0;
+   }
+
+
+    ul.ztree {margin-top: 10px;border: 1px solid #617775;background: #ffffff;width:280px;height:260px;overflow-y:scroll;overflow-x:auto;}
+   input.empty {color: lightgray;}
+.close {
+display: inline-block;
+margin-top: 0px;
+margin-right: 0px;
+width: 9px;
+height: 9px;
+background-repeat: no-repeat !important;
+background-image: url("https://cdn-files.yqt365.com/images/imagesvr2/remove-icon-small.png") !important;
+}
+</style>
+<script>
+function GetRandom(n){
+
+GetRandomn=Math.floor(Math.random()*n+1);
+return GetRandomn;
+}
+
+
+var treeIds  ;
+var webIds;
+var webNames;
+var webCodes;
+var isSumbit = false;
+var totalSize = 0;
+var loopTotalSize = 0;
+var filterWebSites ;
+
+function sycnKeyword(){
+
+zTree1 = $.fn.zTree.getZTreeObj("treeDemo1");
+treeIds = new Array();
+filterWebSites = new Array();
+webIds = "";
+webNames= "";
+webCodes= "";
+
+var treeNode = zTree1.getNodes()[0];
+
+if (typeof(treeNode) != "undefined"  ){
+    
+    
+   getChildren(treeNode);
+   
+}
+else{
+    
+   treeIds = new Array();
+
+   filterWebSites = new Array();
+   
+}
+
+
+
+
+ setTimeout("setTreeKValue();",2000);
+
+}
+
+function doSubmitThis(){
+isSumbit = true;
+
+
+
+sycnKeyword();
+
+
+
+}
+function setTreeKValue(){
+
+document.getElementById("kweb.websiteNames").value = webNames;
+    
+document.getElementById("kweb.websiteIds").value = webIds;
+document.getElementById("kweb.websiteCodes").value = webCodes;
+
+document.getElementById("kweb.websiteTreeNode").value = treeIds;
+document.getElementById("kweb.provinceWebsiteNode").value = filterWebSites;
+var Num = 0 + filterWebSites.length ;
+if(isSumbit){
+   
+    if (filterWebSites.length==0){
+    
+       alert("请选择监测网站!");
+       return;
+    }
+    
+   if (Num > 300){
+   
+        alert("选择了"+Num+"个监测网站, 请控制在300个监测网站之内!");
+        return;
+   }
+    else{
+        
+       subForm();
+    }
+}
+else{
+
+
+   $("#selectedNum").html(Num);
+
+}
+}
+
+function subForm(){
+var ty = 0;
+//parent.isLoginFrm(function(){ 
+var nodes = document.getElementById("kweb.provinceWebsiteNode").value;
+$.ajax({
+url : 'distinctProvinceDirect.action?keywordId=1295765',
+type : "post",
+dataType:'json',
+async: false,
+data: {
+    'keywordFilterRuleId':'0',
+    'kweb.provinceWebsiteNode':nodes,
+    'type':ty
+    },
+success:function(result){
+   if(result>0){
+       alert("对不起,您选择的网站来源中有"+result+"信息重复了");
+   }else if(result==-1){
+       alert("服务器异常，请稍后再试！")
+   }else{ 
+       parent.hideWebDirectDiv();
+       
+       frmPopWin.action = "provinceWebsiteAdd.action?keywordId=1295765&keywordFilterRuleId=0&type="+ty;
+       frmPopWin.target = "_self";
+        frmPopWin.submit();
+    }
+}
+});
+//});
+
+
+  
+}
+
+function getChildren(treeNode){
+    
+
+
+   
+
+   treeIds.push ("{id:" + treeNode.id +",pId:"+ treeNode.pId + ",name:\""+treeNode.name + "\", hashcode:\""+ treeNode.hashcode + "\",open:"+ treeNode.open+",isParent:" + treeNode.isParent +",nocheck:true}") ;
+
+    
+   if (!treeNode.isParent){
+
+           //如果已经打开过的网站节点，直接添加到字串
+           var useTypeNode = treeNode.getParentNode();
+            
+           var provinceNode = useTypeNode.getParentNode();
+
+            filterWebSites.push("{hashcode:\"" + treeNode.hashcode+"\",name:\""+treeNode.name + "\",provinceId:"+provinceNode.id+ ",provinceName:\""+ provinceNode.name+ "\",useType:"+ useTypeNode.id+"}");
+   
+       
+   }
+    
+   if (treeNode.isParent){
+               
+           if (!treeNode.children){
+
+                 
+               //为二级目录：论坛分类等，如果没有子集，需要获取网站信息
+                
+                
+               var parentId = treeNode.pId;
+
+
+               var provinceNode = treeNode.getParentNode();
+
+
+                var turl = "getWebsitekeywordList.action?currentNodeId="+treeNode.id+"&parentNodeId="+parentId;
+                
+               $.ajax( {
+                   url : turl,
+                   type : 'POST',
+                   success : function(data) {
+                       try {  
+                            
+                           if(data.status == 1){
+                               newNodes = eval("(" + data.result + ")");  
+                           }else{
+                               newNodes = eval("(" + data.errorMessage + ")");  
+                           }
+                           
+                       } catch(err) {}  
+
+                       if (newNodes && newNodes != "") { 
+                            
+                             
+                             for(var obj in newNodes){
+                
+                                   var newTreeNode = newNodes[obj];
+                                   filterWebSites.push("{hashcode:\"" + newTreeNode.hashcode+"\",name:\""+newTreeNode.name + "\",provinceId:"+provinceNode.id+ ",provinceName:\""+ provinceNode.name+ "\",useType:"+ treeNode.id+"}");
+
+                           }
+                            
+                              
+                       }   
+                   }
+                    
+               });
+
+/*
+               shouyeDwr.getWebsiteIds(treeNode.id,parentId,GetRandom(30),function(msg){  
+                       if (null==msg) {  
+                        
+                           return;  
+                       }  
+                     
+                       else if(null!= msg){
+                        
+                           webIds = webIds + msg[0] +",";
+                           webNames = webNames + msg[1] +",";
+                           webCodes = webCodes + msg[2] +",";
+                       }
+                   });  
+*/
+           }
+        
+
+        
+       else{
+           
+
+           for(var obj in treeNode.children){
+                
+                   getChildren(treeNode.children[obj]);
+
+                
+
+           }
+
+       }
+
+   }
+
+
+   
+
+
+}
+
+
+
+
+<!--
+
+var setting1 = {
+  
+   check: {
+       enable: false,
+       autoCheckTrigger: true
+   },
+   data: {
+        
+       simpleData: {
+           enable: true
+       }
+   },
+    view: {
+       fontCss: getFontCss
+   },
+   callback: {
+        
+            beforeExpand: zTreeBeforeExpand1,
+           beforeCollapse: zTreeBeforeCollapse,  
+           onCheck: onCheck 
+        
+   }
+};
+
+
+var setting = {
+  
+   check: {
+       enable: true,
+       autoCheckTrigger: true
+   },
+   data: {
+        
+       simpleData: {
+           enable: true
+       }
+   },
+    view: {
+       fontCss: getFontCss
+   },
+   callback: {
+           beforeExpand: zTreeBeforeExpand,
+           beforeCollapse: zTreeBeforeCollapse,  
+           expand: zTreeOnExpand,  
+           collapse: zTreeOnCollapse,  
+           onCheck: onCheck 
+        
+   }
+};
+
+var isGetNodes =false;
+var curParentNode = null;
+var zTree = null;
+
+
+function zTreeBeforeExpand(treeId, treeNode) {  
+    zTree = $.fn.zTree.getZTreeObj("treeDemo");
+    loadTree(zTree,treeNode,1);
+}
+   
+function zTreeBeforeExpand1(treeId, treeNode) {  
+    zTree1 = $.fn.zTree.getZTreeObj("treeDemo1");
+    loadTree(zTree1,treeNode,0);
+}
+
+
+function searchWebTree(){
+    
+   
+
+    var keyvalue = document.getElementById("key").value;
+    if (keyvalue.length>0){
+       var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+       var treeNode = zTree.getNodes()[0];
+       zTree.removeNode(treeNode);
+
+       var turl = "getsearchWebsiteList.action";
+       $.ajax( {
+           url : turl,
+           data:{"keyword":keyvalue},
+           type : 'POST',
+           success : function(data) {
+               //console.log(data)
+                if(data.status == 0){
+                    $("#treeDemo").html("该网站名或域名暂时没有监测");
+                    return;
+                }
+               try {  
+                    newNodes = ""; 
+                   if(data.status == 1){
+                       newNodes = eval("(" + data.result + ")");   
+                    }
+                   
+
+                   
+               } catch(err) {}  
+
+               if (newNodes && newNodes != "") {  
+                       var zNodes = newNodes;
+                       $.fn.zTree.init($("#treeDemo"), setting, zNodes);	
+
+                       treeNode = zTree.getNodes()[0];
+                        
+                       if (treeNode.children.length>20){
+                       
+                           zTree.expandAll(false);
+                       }
+                        
+                       else{
+                           setTimeout("zTree.expandAll(true);",1500);
+                           }
+               }  
+           }
+        
+   });
+
+    }
+    else{
+       var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+       var treeNode = zTree.getNodes()[0];
+       zTree.removeNode(treeNode);
+       var zNodes =[
+       { id:0, pId:0, name:"全部",   isParent:true} 
+    
+
+       ];
+       $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+       initTree();
+    }
+   
+
+}
+function loadTree(treeObj,treeNode,isNeedCheck){
+
+
+     
+   if ( treeNode.isParent && (!treeNode.children || treeNode.children.length==0)) {  
+
+        
+            curParentNode = treeNode; 
+
+       
+            var id = curParentNode.id;  
+            if (id==0){
+            
+               return;
+            }
+            var parentId = curParentNode.pId;
+            //parentId =0 则是地区
+
+   
+       
+       var turl = "getWebsitekeywordList.action?currentNodeId="+curParentNode.id+"&parentNodeId="+parentId;
+       // alert(turl);
+           $.ajax( {
+               url : turl,
+               type : 'POST',
+               success : function(data) {
+                   try {  
+                       
+                       if(data.status == 1){
+                           newNodes = eval("(" + data.result + ")");  
+                       }else{
+                           newNodes = eval("(" + data.errorMessage + ")");  
+                       } 
+
+                       
+                   } catch(err) {}  
+
+                   if (newNodes && newNodes != "") { 
+                        
+                        treeObj.addNodes(curParentNode, newNodes, true); 
+                        if (curParentNode.checked==true){
+                       //加载时勾选子集，左边树时需要
+                           var l= curParentNode.children.length;
+                           
+                           for (var i=0;  i<l; i++) {
+                               
+                                treeObj.checkNode(curParentNode.children[i]);  
+                           }
+                       }
+                        treeObj.updateNode(curParentNode);  
+                        
+                          
+                   }   
+               }
+                
+           });
+
+            
+
+    }  
+    return true;  
+}  
+
+
+function dataFilter(treeId, parentNode, childNodes) {
+   if (parentNode.checkedEx === true) {
+       for(var i=0, l=childNodes.length; i<l; i++) {
+           childNodes[i].checked = parentNode.checked;
+           childNodes[i].halfCheck = false;
+           childNodes[i].checkedEx = true;
+       }
+   }
+   return childNodes;
+}
+function onCheck(event, treeId, treeNode) {
+   
+   treeNode.checkedEx = true;
+}
+function onAsyncSuccess(event, treeId, treeNode, msg) {
+   cancelHalf(treeNode);
+}
+function cancelHalf(treeNode) {
+   if (treeNode.checkedEx) return;
+   var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+   treeNode.halfCheck = false;
+   zTree.updateNode(treeNode);			
+}
+
+function zTreeOnExpand(event, treeId, treeNode) {     
+}  
+function zTreeBeforeCollapse(treeId, treeNode) {  
+}  
+function zTreeOnCollapse(event, treeId, treeNode) {   
+}  
+
+var lastValue = "", nodeList = [], fontCss = {};
+
+
+function searchNode(e) {
+   var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+   var value = $.trim(key.get(0).value);
+
+   var keyType = "";
+    
+   keyType = "name";
+
+   if (key.hasClass("empty")) {
+       value = "";
+   }
+   
+   if (lastValue === value) return;
+
+   updateNodes(false,zTree);
+   lastValue = value;
+   if (value === "") return;
+
+   var result = "";
+    
+   nodeList = zTree.getNodesByParamFuzzy(keyType, value);
+    
+   updateNodes(true,zTree);
+
+}
+function searchNode1(e) {
+   var zTree1 = $.fn.zTree.getZTreeObj("treeDemo1");
+   var value = $.trim(key1.get(0).value);
+
+   var keyType = "";
+    
+   keyType = "name";
+
+   if (key1.hasClass("empty")) {
+       value = "";
+   }
+   
+   if (lastValue === value) return;
+
+   updateNodes(false,zTree1);
+   lastValue = value;
+   if (value === "") return;
+
+   var result = "";
+    
+   nodeList = zTree1.getNodesByParamFuzzy(keyType, value);
+    
+   updateNodes(true,zTree1);
+
+}
+
+
+var key ,key1;
+function blurKey(e) {
+   if (key.get(0).value === "") {
+       key.addClass("empty");
+   }
+}
+function focusKey(e) {
+   if (key.hasClass("empty")) {
+       key.removeClass("empty");
+   }
+}
+function blurKey1(e) {
+   if (key1.get(0).value === "") {
+       key1.addClass("empty");
+   }
+}
+function focusKey1(e) {
+   if (key1.hasClass("empty")) {
+       key1.removeClass("empty");
+   }
+}
+
+function updateNodes(highlight,ztreeObj) {
+    
+   for( var i=0, l= nodeList.length; i<l; i++) {
+       nodeList[i].highlight = highlight;
+       ztreeObj.updateNode(nodeList[i]);
+   }
+}
+
+function getFontCss(treeId, treeNode) {
+   return (!!treeNode.highlight) ? {color:"#A60000", "font-weight":"bold"} : {color:"#333", "font-weight":"normal"};
+}
+
+
+//自定义
+function addTree(){
+   var zTree =  $.fn.zTree.getZTreeObj("treeDemo");
+
+   nodeList = zTree.getCheckedNodes(true);  //获取选择的数加入到选择树中
+   var Num = 0 + nodeList.length;
+   if (Num>303){
+   
+       alert("已超过300个来源的添加，请减少选择的来源!");
+       return;
+   }
+   addSelectedTree(nodeList);
+
+   sycnKeyword(); 
+}
+
+function addSelectedTree(nodeList){
+   
+
+        
+       var zTree1 =  $.fn.zTree.getZTreeObj("treeDemo1");
+       var l= nodeList.length;
+        
+       for( var i=0 ; i<l; i++) {
+           var newNode = nodeList[i];
+            
+           var id = newNode.id;
+        
+           id = parseInt(id);
+
+            
+            
+
+           var node = zTree1.getNodeByParam("id", id);
+
+
+           if (node === null  ) {
+                var paId = newNode.pId;
+               
+                var pnode = zTree1.getNodeByParam("id", paId);
+
+                    zTree1.addNodes(pnode,{id:newNode.id,pId:newNode.pId,isParent:newNode.isParent,name:newNode.name,hashcode:newNode.hashcode,nocheck:true},false);
+                
+                
+           }
+            
+       }
+   
+      
+       
+       // zTree1.expandAll(true); 
+
+        
+}
+
+
+
+function delTreeNode(){
+
+   var zTree1 =  $.fn.zTree.getZTreeObj("treeDemo1");
+   nodeList = zTree1.getSelectedNodes(true);
+
+   var l= nodeList.length;
+   for( var i=0 ; i<l; i++) {
+
+               
+             
+             if (nodeList[i].id==0){
+               zTree1.removeNode(nodeList[i]);
+               break;
+             }
+             else{
+               var pnode = nodeList[i].getParentNode();
+               zTree1.removeNode(nodeList[i]);
+             }
+             
+             while (pnode.children.length==0 ){
+                   var node = pnode;
+                   if (node.id==0){
+                       zTree1.removeNode(node);
+                       break;
+                   }
+                   else{
+                       pnode = node.getParentNode();
+                    
+                       zTree1.removeNode(node);
+                   }
+
+                
+            }
+
+   }
+   isSumbit = false;
+    sycnKeyword(); 
+    
+}
+
+var zNodes =[
+   {id:0, pId:0, name:"全部", hashcode:"",  isParent:true} 
+
+    
+
+];
+var zNodes1 =[
+   
+
+    
+
+];
+$(document).ready(function(){
+   $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+
+   $.fn.zTree.init($("#treeDemo1"), setting1 , zNodes1 );
+   key1 = $("#key1");
+   key1.bind("focus", focusKey1)
+   .bind("blur", blurKey1)
+   .bind("propertychange", searchNode1)
+   .bind("input", searchNode1);
+
+});
+
+
+</SCRIPT>
+<BODY>
+
+<form method=post name="frmPopWin" id="frmPopWin">
+    <INPUT type=hidden name="kweb.websiteIds" id="kweb.websiteIds"  >
+    <INPUT type=hidden name="tope" id="type" value="0" >
+    <INPUT type=hidden name="count" id="count" value="0" >
+    <INPUT type=hidden name="kweb.websiteNames" id="kweb.websiteNames"  >
+    <INPUT type=hidden name="kweb.websiteCodes" id="kweb.websiteCodes"  >
+    <INPUT type=hidden name="kweb.websiteTreeNode" id="kweb.websiteTreeNode">
+    <INPUT type=hidden name="kweb.provinceWebsiteNode" id="kweb.provinceWebsiteNode">
+<div class="" style="">
+<div class="modal-header">
+       <button type="button" class="close choose-close" data-dismiss="modal" aria-hidden="true" onclick="parent.hideWebDirectDiv();"></button>
+       <h3 id="myModalLabel3">选择要加入监测的网站</h3>
+</div>
+<div class="iframe-wrapper">
+<div class="modal-content">
+   
+       <div class="modal-body">
+           <div class="modal-wrapper">
+               <div class="choose-title">
+                   <p class="choose-desc" style="margin-left: 30px;">请选择监测网站，支持多选，最多不能超出300个，已监测<span id="selectedNum">0</span>个！</p>
+               </div>
+               <div class="choose-center">
+                   <ul class="choose-center-ul">
+                       <li class="choose-center-li">
+                           <div class="choose-center-left">
+                               <div class="choose-top">
+                                   <input type="text" placeholder="输入网站名称查询" id="key" name="key" />
+                                   <a href="javascript:searchWebTree();" class="btn yellow icn-only">搜索</a>
+                               </div>
+                               <div class="choose-bottom">
+                                   <div class="content_wrap">
+                                   <div class="zTreeDemoBackground left">
+                                   <ul id="treeDemo" class="ztree" style="border: 1px solid #DDDDDD;"></ul>
+                                   </div> 
+                                   
+                                   </div>
+                               </div>
+                           </div>
+                       </li>
+                       <li class="choose-center-li">
+                           <div class="choose-center-operator">
+                               <a  href="javascript:addTree();" class="btn yellow icn-only" style="padding: 5px 6px;">增加>></a>
+                               <a  href="javascript:delTreeNode();" class="btn yellow icn-only">删除</a>
+                           </div>
+                       </li>
+                       <li class="choose-center-li">
+                           <div class="choose-center-right">
+                               <div class="choose-top">
+                                   <input type="text" placeholder="输入网站名称或域名联想"  id="key1" name="key1"/>
+                               </div>
+                               <div class="choose-bottom">
+                                   <div class="zTreeDemoBackground left">
+                                   <ul id="treeDemo1" class="ztree" style="border: 1px solid #DDDDDD;"></ul>
+                                   </div> 
+                                   
+                                   </div>
+                               </div>
+                           </div>
+                       </li>
+                   </ul>
+               </div>
+               <div class="choose-footer-style-custom">
+                   <a class="btn yellow"  href="javascript:doSubmitThis();" >保存</a>
+                   <a  class="btn yellow" href="javascript:parent.hideWebDirectDiv();"   >关闭</a>
+               </div>
+           </div>
+
+       </div>
+    
+ </div>
+</div>
+<!--
+
+-->
+
+</div>
+
+
+</form>
+</BODY>
+
+
+<script>
+
+function initTree() {  
+    
+    zTree = $.fn.zTree.getZTreeObj("treeDemo");
+     
+    var  curParentNode = zTree.getNodeByParam("id","0");
+
+    
+    var id = curParentNode.id;
+   
+var result= "[{id:1,pId:0,name:'北京',isParent:true},{id:103,pId:1,name:'博客',isParent:true},{id:105,pId:1,name:'报刊',isParent:true},{id:101,pId:1,name:'网站',isParent:true},{id:105,pId:1,name:'报刊',isParent:true},{id:102,pId:1,name:'论坛',isParent:true},{id:106,pId:1,name:'贴吧',isParent:true},{id:102,pId:1,name:'论坛',isParent:true},{id:101,pId:1,name:'网站',isParent:true},{id:1,pId:0,name:'北京市',isParent:true},{id:103,pId:1,name:'博客',isParent:true},{id:105,pId:1,name:'报刊',isParent:true},{id:101,pId:1,name:'网站',isParent:true},{id:105,pId:1,name:'报刊',isParent:true},{id:102,pId:1,name:'论坛',isParent:true},{id:106,pId:1,name:'贴吧',isParent:true},{id:102,pId:1,name:'论坛',isParent:true},{id:101,pId:1,name:'网站',isParent:true},{id:2,pId:0,name:'天津',isParent:true},{id:205,pId:2,name:'报刊',isParent:true},{id:201,pId:2,name:'网站',isParent:true},{id:202,pId:2,name:'论坛',isParent:true},{id:3,pId:0,name:'河北',isParent:true},{id:301,pId:3,name:'网站',isParent:true},{id:303,pId:3,name:'博客',isParent:true},{id:302,pId:3,name:'论坛',isParent:true},{id:305,pId:3,name:'报刊',isParent:true},{id:4,pId:0,name:'山西',isParent:true},{id:401,pId:4,name:'网站',isParent:true},{id:402,pId:4,name:'论坛',isParent:true},{id:403,pId:4,name:'博客',isParent:true},{id:405,pId:4,name:'报刊',isParent:true},{id:5,pId:0,name:'内蒙古',isParent:true},{id:502,pId:5,name:'论坛',isParent:true},{id:501,pId:5,name:'网站',isParent:true},{id:505,pId:5,name:'报刊',isParent:true},{id:6,pId:0,name:'辽宁',isParent:true},{id:605,pId:6,name:'报刊',isParent:true},{id:602,pId:6,name:'论坛',isParent:true},{id:601,pId:6,name:'网站',isParent:true},{id:7,pId:0,name:'吉林',isParent:true},{id:701,pId:7,name:'网站',isParent:true},{id:702,pId:7,name:'论坛',isParent:true},{id:705,pId:7,name:'报刊',isParent:true},{id:8,pId:0,name:'黑龙江',isParent:true},{id:802,pId:8,name:'论坛',isParent:true},{id:805,pId:8,name:'报刊',isParent:true},{id:801,pId:8,name:'网站',isParent:true},{id:9,pId:0,name:'上海',isParent:true},{id:906,pId:9,name:'贴吧',isParent:true},{id:902,pId:9,name:'论坛',isParent:true},{id:905,pId:9,name:'报刊',isParent:true},{id:903,pId:9,name:'博客',isParent:true},{id:901,pId:9,name:'网站',isParent:true},{id:10,pId:0,name:'江苏',isParent:true},{id:1005,pId:10,name:'报刊',isParent:true},{id:1002,pId:10,name:'论坛',isParent:true},{id:1001,pId:10,name:'网站',isParent:true},{id:1008,pId:10,isParent:true},{id:1003,pId:10,name:'博客',isParent:true},{id:11,pId:0,name:'浙江',isParent:true},{id:1105,pId:11,name:'报刊',isParent:true},{id:1102,pId:11,name:'论坛',isParent:true},{id:1103,pId:11,name:'博客',isParent:true},{id:1101,pId:11,name:'网站',isParent:true},{id:12,pId:0,name:'安徽',isParent:true},{id:1201,pId:12,name:'网站',isParent:true},{id:1206,pId:12,name:'贴吧',isParent:true},{id:1202,pId:12,name:'论坛',isParent:true},{id:1208,pId:12,isParent:true},{id:1205,pId:12,name:'报刊',isParent:true},{id:13,pId:0,name:'福建',isParent:true},{id:1301,pId:13,name:'网站',isParent:true},{id:1305,pId:13,name:'报刊',isParent:true},{id:1302,pId:13,name:'论坛',isParent:true},{id:14,pId:0,name:'江西',isParent:true},{id:1401,pId:14,name:'网站',isParent:true},{id:1405,pId:14,name:'报刊',isParent:true},{id:1402,pId:14,name:'论坛',isParent:true},{id:15,pId:0,name:'山东',isParent:true},{id:1505,pId:15,name:'报刊',isParent:true},{id:1502,pId:15,name:'论坛',isParent:true},{id:1508,pId:15,isParent:true},{id:1506,pId:15,name:'贴吧',isParent:true},{id:1501,pId:15,name:'网站',isParent:true},{id:16,pId:0,name:'河南',isParent:true},{id:1602,pId:16,name:'论坛',isParent:true},{id:1601,pId:16,name:'网站',isParent:true},{id:1605,pId:16,name:'报刊',isParent:true},{id:17,pId:0,name:'湖北',isParent:true},{id:1702,pId:17,name:'论坛',isParent:true},{id:1701,pId:17,name:'网站',isParent:true},{id:1705,pId:17,name:'报刊',isParent:true},{id:18,pId:0,name:'湖南',isParent:true},{id:1805,pId:18,name:'报刊',isParent:true},{id:1801,pId:18,name:'网站',isParent:true},{id:1802,pId:18,name:'论坛',isParent:true},{id:1803,pId:18,name:'博客',isParent:true},{id:19,pId:0,name:'广东',isParent:true},{id:1902,pId:19,name:'论坛',isParent:true},{id:1903,pId:19,name:'博客',isParent:true},{id:1905,pId:19,name:'报刊',isParent:true},{id:1906,pId:19,name:'贴吧',isParent:true},{id:1901,pId:19,name:'网站',isParent:true},{id:20,pId:0,name:'广西',isParent:true},{id:2002,pId:20,name:'论坛',isParent:true},{id:2005,pId:20,name:'报刊',isParent:true},{id:2001,pId:20,name:'网站',isParent:true},{id:2003,pId:20,name:'博客',isParent:true},{id:21,pId:0,name:'海南',isParent:true},{id:2105,pId:21,name:'报刊',isParent:true},{id:2101,pId:21,name:'网站',isParent:true},{id:2102,pId:21,name:'论坛',isParent:true},{id:22,pId:0,name:'重庆',isParent:true},{id:2201,pId:22,name:'网站',isParent:true},{id:2202,pId:22,name:'论坛',isParent:true},{id:2205,pId:22,name:'报刊',isParent:true},{id:23,pId:0,name:'四川',isParent:true},{id:2305,pId:23,name:'报刊',isParent:true},{id:2302,pId:23,name:'论坛',isParent:true},{id:2306,pId:23,name:'贴吧',isParent:true},{id:2301,pId:23,name:'网站',isParent:true},{id:24,pId:0,name:'贵州',isParent:true},{id:2405,pId:24,name:'报刊',isParent:true},{id:2401,pId:24,name:'网站',isParent:true},{id:2402,pId:24,name:'论坛',isParent:true},{id:25,pId:0,name:'云南',isParent:true},{id:2501,pId:25,name:'网站',isParent:true},{id:2505,pId:25,name:'报刊',isParent:true},{id:2502,pId:25,name:'论坛',isParent:true},{id:26,pId:0,name:'西藏',isParent:true},{id:2605,pId:26,name:'报刊',isParent:true},{id:2601,pId:26,name:'网站',isParent:true},{id:2602,pId:26,name:'论坛',isParent:true},{id:27,pId:0,name:'陕西',isParent:true},{id:2701,pId:27,name:'网站',isParent:true},{id:2705,pId:27,name:'报刊',isParent:true},{id:2702,pId:27,name:'论坛',isParent:true},{id:28,pId:0,name:'甘肃',isParent:true},{id:2805,pId:28,name:'报刊',isParent:true},{id:2801,pId:28,name:'网站',isParent:true},{id:2802,pId:28,name:'论坛',isParent:true},{id:29,pId:0,name:'青海',isParent:true},{id:2901,pId:29,name:'网站',isParent:true},{id:2905,pId:29,name:'报刊',isParent:true},{id:2902,pId:29,name:'论坛',isParent:true},{id:30,pId:0,name:'宁夏',isParent:true},{id:3005,pId:30,name:'报刊',isParent:true},{id:3001,pId:30,name:'网站',isParent:true},{id:3002,pId:30,name:'论坛',isParent:true},{id:31,pId:0,name:'新疆',isParent:true},{id:3101,pId:31,name:'网站',isParent:true},{id:3105,pId:31,name:'报刊',isParent:true},{id:3102,pId:31,name:'论坛',isParent:true},{id:35,pId:0,name:'香港',isParent:true},{id:3502,pId:35,name:'论坛',isParent:true},{id:3501,pId:35,name:'网站',isParent:true},{id:3504,pId:35,name:'境外',isParent:true},{id:3505,pId:35,name:'报刊',isParent:true},{id:36,pId:0,name:'澳门',isParent:true},{id:3605,pId:36,name:'报刊',isParent:true},{id:3601,pId:36,name:'网站',isParent:true},{id:3602,pId:36,name:'论坛',isParent:true},{id:37,pId:0,name:'台湾',isParent:true},{id:3701,pId:37,name:'网站',isParent:true},{id:3705,pId:37,name:'报刊',isParent:true},{id:3702,pId:37,name:'论坛',isParent:true},{id:40,pId:0,name:'境外',isParent:true},{id:4001,pId:40,name:'网站',isParent:true},{id:4005,pId:40,name:'报刊',isParent:true},{id:4002,pId:40,name:'论坛',isParent:true}]"
+   var turl = "getProviceWebsitekeywordList.action";
+//    $.ajax( {
+//        url : turl,
+//        type : 'POST',
+//        success : function(data) {
+//            try {  
+            
+//                if(data.status == 1){
+                   newNodes = eval("(" +result + ")");  
+            //    }else{
+            //        newNodes = eval("(" + data.errorMessage + ")");  
+            //    }
+
+               
+        //    } catch(err) {}  
+
+           if (newNodes && newNodes != "") { 
+                
+                zTree.addNodes(curParentNode, newNodes, true);  
+                zTree.updateNode(curParentNode);  
+                
+                  
+           }   
+    //    }
+        
+//    });
+
+    
+        
+    zTree.expandAll(true);
+    
+}  
+setTimeout('initTree();',700);
+
+
+</script>
+
+</HTML>

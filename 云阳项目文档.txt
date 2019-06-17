@@ -1,0 +1,46 @@
+所有请求需在 src/api/data.js中调用  src/api/user.js 获取相关的用户信息
+operationType 1-管理人员 2-处置人员 adminPrefix: "system:admin"
+在store/module/user.js中role.roleKey.indexOf(user.adminPrefix) 来判断是管理人员还是处置人员
+
+
+全部status0 待分发status1 待审核status3 已退回status2
+
+ state  //待处理 1  //已处理 2
+
+dataSendStatus 
+工单发送状态 1-待分发 2-已分发 3-已处置 4-已审核 5-已结束 6-审核结束 7-待采纳 8-已采纳 9-已撤销 10-待审核
+11-已驳回 12-已办结
+
+
+libs/custfilter.js  全局过滤器
+所有的数据存储在 module/data.js 的actions中的Promise对象中(相当于computed)
+
+
+dealId 处置记录流程ID
+dealType 处置类型 1-分发 2-处置 3-退回 4-结束
+examType 1待审核 2通过 3 追评 4 驳回 5 办结
+isClose 是否结束流程  0-继续处置  1-结束处置流程
+
+
+submitOrgs 为send-comment.vue中 父组件像depart-tree.vue 传值
+libs/tools.js   所有的获取方法
+
+
+账号: wzop2
+
+指令部分
+dataStatus 0all 2待分发 4已分发 6待审核 8已办结 10已撤销
+dealStatus 0all 2待分发 4已分发 8已办结(已采纳) 10已撤销 11待处置 12已处置(待审核) 14已退回 16已驳回
+
+
+待审核办结 this.handlePass(params.row.id, params.row.dealType, 1)
+已退回通过  this.handlePass(params.row.id, params.row.dealType, 2)
+
+
+
+
+dataFrom: 2
+dataSendStatus: 6
+dataSource: null
+dataSourceName: null
+dataType: 2
